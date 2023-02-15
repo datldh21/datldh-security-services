@@ -15,16 +15,19 @@ const getDimensions = (H, W, h, w, ratio) => {
 };
 
 export const addWatermarkToImage = async (
-    buffer: Buffer,
-    watermarkUrl: string
+    mainImage: Buffer | string,
+    watermarkUrl: string,
+    ratio?: number,
+    opacity?: number
 ) => {
+    //  Type of mainImage must be Buffer or string (url)
     try {
         var options = {
-            ratio: 0.8, // Should be less than one
-            opacity: 0.6, //Should be less than one
+            ratio: ratio ?? 0.8, // Should be less than one
+            opacity: opacity ?? 0.6, //Should be less than one
         };
 
-        const main = await Jimp.read(buffer);
+        const main = await Jimp.read(mainImage);
         const watermark = await Jimp.read(watermarkUrl);
         const [newHeight, newWidth] = getDimensions(
             main.getHeight(),
@@ -49,6 +52,6 @@ export const addWatermarkToImage = async (
         let bufferImage = await image.getBufferAsync(mimeImg);
         return bufferImage;
     } catch (error) {
-        return buffer;
+        return mainImage;
     }
 };
