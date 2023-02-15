@@ -14,16 +14,18 @@ const getDimensions = (H, W, h, w, ratio) => {
     return [hh, ww];
 };
 
-export const addWatermarkToImage = async (buffer: Buffer) => {
+export const addWatermarkToImage = async (
+    buffer: Buffer,
+    watermarkUrl: string
+) => {
     try {
         var options = {
             ratio: 0.8, // Should be less than one
             opacity: 0.6, //Should be less than one
-            dstPath: "./watermark.png",
         };
 
         const main = await Jimp.read(buffer);
-        const watermark = await Jimp.read("./images/watermark.png");
+        const watermark = await Jimp.read(watermarkUrl);
         const [newHeight, newWidth] = getDimensions(
             main.getHeight(),
             main.getWidth(),
