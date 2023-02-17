@@ -1,0 +1,1 @@
+export declare const verifyTokenMiddleware: (req: Request, res: Response, next: NextFunction, REFRESH_TOKEN_SECRET: string, ACCESS_TOKEN_MAXAGE?: number, REFRESH_TOKEN_MAXAGE?: number) => Promise<any>;
