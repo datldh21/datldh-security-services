@@ -6,7 +6,7 @@ export const EncryptFieldsData = ({
     secretKey,
 }: {
     listData: any[];
-    fields: any;
+    fields: any[];
     secretKey: any;
 }) => {
     if (listData?.length === 0) {
