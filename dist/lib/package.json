@@ -1,6 +1,6 @@
 {
     "name": "@datldh21/security-services",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "A javascript library gives you the package to protect your website",
     "main": "lib/es5/index.js",
     "module": "lib/es6/index.js",
