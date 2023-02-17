@@ -1,0 +1,31 @@
+{
+    "name": "@datldh21/security-services",
+    "version": "1.0.0",
+    "description": "A javascript library gives you the package to protect your website",
+    "main": "lib/es5/index.js",
+    "module": "lib/es6/index.js",
+    "sideEffects": false,
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/datldh21/datldh-security-services"
+    },
+    "files": [
+        "lib",
+        "package.json",
+        "README.md"
+    ],
+    "keywords": [
+        "javascript",
+        "security",
+        "services"
+    ],
+    "author": {
+        "name": "Le Dang Hoang Dat",
+        "url": "https://github.com/datldh21"
+    },
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/datldh21/datldh-security-services/util/issues"
+    },
+    "homepage": "https://github.com/datldh21/datldh-security-services/util#readme"
+}
