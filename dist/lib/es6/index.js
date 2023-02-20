@@ -1,4 +1,3 @@
-import { DecryptFieldsData } from "./cryptData/decryptFieldsData";
-import { EncryptFieldsData } from "./cryptData/encryptFieldsData";
-import { addWatermarkToImage } from "./watermark/addWatermarkToImage";
-module.exports = { EncryptFieldsData: EncryptFieldsData, DecryptFieldsData: DecryptFieldsData, addWatermarkToImage: addWatermarkToImage };
+export { EncryptFieldsData } from "./cryptData/encryptFieldsData";
+export { DecryptFieldsData } from "./cryptData/decryptFieldsData";
+export { addWatermarkToImage } from "./watermark/addWatermarkToImage";

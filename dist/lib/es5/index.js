@@ -1,6 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var decryptFieldsData_1 = require("./cryptData/decryptFieldsData");
+exports.addWatermarkToImage = exports.DecryptFieldsData = exports.EncryptFieldsData = void 0;
 var encryptFieldsData_1 = require("./cryptData/encryptFieldsData");
+Object.defineProperty(exports, "EncryptFieldsData", { enumerable: true, get: function () { return encryptFieldsData_1.EncryptFieldsData; } });
+var decryptFieldsData_1 = require("./cryptData/decryptFieldsData");
+Object.defineProperty(exports, "DecryptFieldsData", { enumerable: true, get: function () { return decryptFieldsData_1.DecryptFieldsData; } });
 var addWatermarkToImage_1 = require("./watermark/addWatermarkToImage");
-module.exports = { EncryptFieldsData: encryptFieldsData_1.EncryptFieldsData, DecryptFieldsData: decryptFieldsData_1.DecryptFieldsData, addWatermarkToImage: addWatermarkToImage_1.addWatermarkToImage };
+Object.defineProperty(exports, "addWatermarkToImage", { enumerable: true, get: function () { return addWatermarkToImage_1.addWatermarkToImage; } });
