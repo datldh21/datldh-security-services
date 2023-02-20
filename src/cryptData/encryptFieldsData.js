@@ -1,24 +1,16 @@
-import CryptoJS from "crypto-js";
+const CryptoJS = require("crypto-js");
 
-export const EncryptFieldsData = ({
-    listData,
-    fields,
-    secretKey,
-}: {
-    listData: any[];
-    fields: any[];
-    secretKey: any;
-}) => {
+const EncryptFieldsData = ({ listData, fields, secretKey }) => {
     if (listData?.length === 0) {
         return [];
     } else {
         if (fields.length === 0) {
             return listData;
         } else {
-            let result: any[] = [];
-            listData.map((data: any) => {
+            let result = [];
+            listData.map((data) => {
                 let newData = { ...data };
-                fields.map((field: any) => {
+                fields.map((field) => {
                     let encryptField = CryptoJS.AES.encrypt(
                         JSON.stringify({ field: data[field] }),
                         secretKey
@@ -34,3 +26,5 @@ export const EncryptFieldsData = ({
         }
     }
 };
+
+module.exports = { EncryptFieldsData };

@@ -13,13 +13,7 @@ const getDimensions = (H, W, h, w, ratio) => {
     }
     return [hh, ww];
 };
-
-export const addWatermarkToImage = async (
-    mainImage: Buffer | string,
-    watermarkUrl: string,
-    ratio?: number,
-    opacity?: number
-) => {
+const addWatermarkToImage = async (mainImage, watermarkUrl, ratio, opacity) => {
     //  Type of mainImage must be Buffer or string (url)
     try {
         var options = {
@@ -55,3 +49,5 @@ export const addWatermarkToImage = async (
         return mainImage;
     }
 };
+
+module.exports = { addWatermarkToImage };
