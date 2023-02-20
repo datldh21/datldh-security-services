@@ -18,9 +18,9 @@ export function DecryptFieldsData({
     secretKey: string;
 });
 
-// export function addWatermarkToImage(
-//     mainImage: Buffer | string,
-//     watermarkUrl: string,
-//     ratio: number | undefined,
-//     opacity: number | undefined
-// );
+export function addWatermarkToImage(
+    mainImage: Buffer | string,
+    watermarkUrl: string,
+    ratio: number | undefined,
+    opacity: number | undefined
+);
