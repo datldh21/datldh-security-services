@@ -13,7 +13,12 @@ const getDimensions = (H, W, h, w, ratio) => {
     }
     return [hh, ww];
 };
-const addWatermarkToImage = async (mainImage, watermarkUrl, ratio, opacity) => {
+const addWatermarkToImage = async ({
+    mainImage,
+    watermarkUrl,
+    ratio,
+    opacity,
+}) => {
     //  Type of mainImage must be Buffer or string (url)
     try {
         var options = {
