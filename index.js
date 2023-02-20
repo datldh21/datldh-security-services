@@ -1,9 +1,9 @@
-import { EncryptFieldsData } from "./src/cryptData/encryptFieldsData";
-import { DecryptFieldsData } from "./src/cryptData/decryptFieldsData";
-import { addWatermarkToImage } from "./src/watermark/addWatermarkToImage";
+const { EncryptFieldsData } = require("./src/cryptData/encryptFieldsData");
+const { DecryptFieldsData } = require("./src/cryptData/decryptFieldsData");
+// const { addWatermarkToImage } = require("./src/watermark/addWatermarkToImage");
 
 module.exports = {
     EncryptFieldsData,
     DecryptFieldsData,
-    addWatermarkToImage,
+    // addWatermarkToImage,
 };
