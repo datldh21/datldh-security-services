@@ -2,18 +2,86 @@ const fs = require("fs");
 var ipRangeCheck = require("ip-range-check");
 var axios = require("axios");
 
-const myArgs = process.argv.slice(2);
-const site = myArgs[myArgs.length - 1];
-const BASE_PATH = "/home/code/tests/detect_ip_request/";
+const BASE_PATH = "./";
 
-// const BASE_PATH = "";
+const getIPsGoogle = () => {
+    let rawdata = fs.readFileSync(BASE_PATH + "googlebotIp.json");
+    let datas = JSON.parse(rawdata.toString());
+    let allIPs = datas.prefixes.map((e) =>
+        e.ipv6Prefix ? e.ipv6Prefix : e.ipv4Prefix
+    );
+    rawdata = fs.readFileSync(BASE_PATH + "goog_ip_rang.json");
+    datas = JSON.parse(rawdata.toString());
+    allIPs = allIPs.concat(
+        datas.prefixes.map((e) => (e.ipv6Prefix ? e.ipv6Prefix : e.ipv4Prefix))
+    );
+    return allIPs;
+};
 
-const getAllIPCloudFlare = async (newIpsBlock) => {
+const getDate = (isFull) => {
+    let currentDate = new Date(Date.now());
+    let time =
+        currentDate.getFullYear() +
+        "-" +
+        getNumberString(currentDate.getMonth() + 1) +
+        "-" +
+        getNumberString(currentDate.getDate());
+    if (isFull) {
+        time +=
+            "T" +
+            getNumberString(currentDate.getHours()) +
+            ":" +
+            getNumberString(currentDate.getMinutes());
+    }
+    return time;
+};
+
+const getNumberString = (number) => {
+    if (number < 10) {
+        return "0" + number;
+    }
+    return number;
+};
+
+const replaceListIp = ({
+    newIpsBlock,
+    APIUrl,
+    X_Auth_Email,
+    X_Auth_Key,
+    Cookie,
+}) => {
+    var config = {
+        method: "put",
+        url: APIUrl,
+        headers: {
+            "X-Auth-Email": X_Auth_Email,
+            "X-Auth-Key": X_Auth_Key,
+            "Content-Type": "application/json",
+            Cookie: Cookie,
+        },
+        data: JSON.stringify(newIpsBlock),
+    };
+
+    axios(config)
+        .then(function (response) {
+            console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+};
+
+const getAllIPCloudFlare = async ({
+    newIpsBlock,
+    APIUrl,
+    X_Auth_Email,
+    X_Auth_Key,
+    Cookie,
+}) => {
     let cursor = null;
     let allIPs = [];
     while (true) {
-        let url =
-            "https://api.cloudflare.com/client/v4/accounts/6082f5baa9e6b2d2784464cef3e40a0d/rules/lists/5d3692bef853438aad8c2b7b4b8f6953/items";
+        let url = APIUrl;
         if (cursor) {
             url += "?cursor=" + cursor;
         }
@@ -22,8 +90,8 @@ const getAllIPCloudFlare = async (newIpsBlock) => {
             url: url,
             headers: {
                 "Content-Type": "application/json",
-                "X-Auth-Key": "404630dfe9b94c8ec56715bea2c11a01e21cd",
-                "X-Auth-Email": "lampt2509@gmail.com",
+                "X-Auth-Key": X_Auth_Key,
+                "X-Auth-Email": X_Auth_Email,
             },
         };
 
@@ -41,34 +109,18 @@ const getAllIPCloudFlare = async (newIpsBlock) => {
     }
     if (newIpsBlock?.length) {
         allIPs = allIPs.concat(newIpsBlock);
-        replaceListIp(newIpsBlock);
+        replaceListIp({
+            newIpsBlock,
+            APIUrl,
+            X_Auth_Email,
+            X_Auth_Key,
+            Cookie,
+        });
     }
 };
 
-const replaceListIp = (newIpsBlock) => {
-    var config = {
-        method: "put",
-        url: "https://api.cloudflare.com/client/v4/accounts/6082f5baa9e6b2d2784464cef3e40a0d/rules/lists/5d3692bef853438aad8c2b7b4b8f6953/items",
-        headers: {
-            "X-Auth-Email": "lampt2509@gmail.com",
-            "X-Auth-Key": "404630dfe9b94c8ec56715bea2c11a01e21cd",
-            "Content-Type": "application/json",
-            Cookie: "__cflb=0H28vgHxwvgAQtjUGU4vq74ZFe3sNVUZQCToZfyUmMP; __cfruid=bc32de7f0870ba1238d8d08cfd8eb98007e0f262-1651678327",
-        },
-        data: JSON.stringify(newIpsBlock),
-    };
-
-    axios(config)
-        .then(function (response) {
-            console.log(JSON.stringify(response.data));
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-};
-
-const checkData = () => {
-    let rawdata = fs.readFileSync(BASE_PATH + site + "/" + site + ".json");
+const checkData = ({ rawDataFilePath, newDataFilePath }) => {
+    let rawdata = fs.readFileSync(rawDataFilePath);
     let datas = JSON.parse(rawdata.toString());
     let newDatas = [];
     let keys = [];
@@ -116,13 +168,13 @@ const checkData = () => {
             });
         }
     }
-    let whitelistIps = getIPIsGoogle();
+    let whitelistIps = getIPsGoogle();
     ipRequestLargest = ipRequestLargest.filter(
         (item) => !ipRangeCheck(item.ip, whitelistIps) && item.value >= 100
     );
     if (ipRequestLargest?.length) {
         let date = getDate(false);
-        let path = BASE_PATH + site + "/" + date + ".log";
+        let path = newDataFilePath + date + ".log";
         fs.writeFileSync(
             path,
             getDate(true) + "\n" + JSON.stringify(ipRequestLargest),
@@ -133,43 +185,3 @@ const checkData = () => {
         getAllIPCloudFlare(ipRequestLargest.map((data) => data.ip));
     }
 };
-
-const getIPIsGoogle = () => {
-    let rawdata = fs.readFileSync(BASE_PATH + "googlebotIp.json");
-    let datas = JSON.parse(rawdata.toString());
-    let allIPs = datas.prefixes.map((e) =>
-        e.ipv6Prefix ? e.ipv6Prefix : e.ipv4Prefix
-    );
-    rawdata = fs.readFileSync(BASE_PATH + "goog_ip_rang.json");
-    datas = JSON.parse(rawdata.toString());
-    allIPs = allIPs.concat(
-        datas.prefixes.map((e) => (e.ipv6Prefix ? e.ipv6Prefix : e.ipv4Prefix))
-    );
-    return allIPs;
-};
-
-const getDate = (isFull) => {
-    let currentDate = new Date(Date.now());
-    let time =
-        currentDate.getFullYear() +
-        "-" +
-        getNumberString(currentDate.getMonth() + 1) +
-        "-" +
-        getNumberString(currentDate.getDate());
-    if (isFull) {
-        time +=
-            "T" +
-            getNumberString(currentDate.getHours()) +
-            ":" +
-            getNumberString(currentDate.getMinutes());
-    }
-    return time;
-};
-const getNumberString = (number) => {
-    if (number < 10) {
-        return "0" + number;
-    }
-    return number;
-};
-
-checkData();
