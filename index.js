@@ -7,7 +7,6 @@ const { antiNoSQL } = require("./src/sqlInjection/antiNoSQL");
 const { antiSQL } = require("./src/sqlInjection/antiSQL");
 const { antiBruteForce } = require("./src/bruteForce/antiBruteForce");
 const { generateToken } = require("./src/jwt/generateToken");
-const { handleRefreshToken } = require("./src/jwt/handleRefreshToken");
 const { verifyTokenMiddleware } = require("./src/jwt/verifyTokenMiddleware");
 
 module.exports = {
@@ -20,6 +19,5 @@ module.exports = {
     antiSQL,
     antiBruteForce,
     generateToken,
-    handleRefreshToken,
     verifyTokenMiddleware,
 };
