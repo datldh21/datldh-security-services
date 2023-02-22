@@ -29,3 +29,21 @@ export function addWatermarkToImage({
     ratio: number | undefined;
     opacity: number | undefined;
 });
+
+export function hashStringData({ data }: { data: string });
+
+export function antiXSS({ input }: { input: string });
+
+export function antiNoSQL({ input }: { input: any });
+
+export function antiSQL({ input }: { input: any });
+
+export function antiBruteForce({
+    password,
+    attempts,
+    lockoutTime,
+}: {
+    password: string;
+    attempts: number;
+    lockoutTime: number;
+});
