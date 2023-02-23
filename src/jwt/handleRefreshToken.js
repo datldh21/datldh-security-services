@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { getAccessToken, getRefreshToken, jwtEncode } = require("../util");
+const { getAccessToken, getRefreshToken, jwtEncode } = require("../../util");
 
 const handleRefreshToken = async ({
     req,
