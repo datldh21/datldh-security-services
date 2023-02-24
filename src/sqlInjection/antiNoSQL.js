@@ -1,11 +1,7 @@
 const antiNoSQL = ({ input }) => {
-    // Ensure the input is a string
-    input = String(input);
+    let sanitizedString = input.replace(/[$&+,:;=?@#|'<>.^*()%!-]/g, "");
 
-    // Remove any characters that could be used in a NoSQL injection attack
-    input = input.replace(/[\$\\]/g, "");
-
-    return input;
+    return sanitizedString;
 };
 
 module.exports = { antiNoSQL };

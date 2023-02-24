@@ -1,4 +1,4 @@
-const antiBruteForce = ({ password, attempts, lockoutTime }) => {
+const limitLoginAttempts = ({ password, attempts, lockoutTime }) => {
     if (attempts >= 3) {
         // Check if the lockout time has expired
         const now = new Date();
@@ -15,4 +15,4 @@ const antiBruteForce = ({ password, attempts, lockoutTime }) => {
     return false;
 };
 
-module.exports = { antiBruteForce };
+module.exports = { limitLoginAttempts };

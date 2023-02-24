@@ -5,7 +5,8 @@ const { hashStringData } = require("./src/cryptData/hashString");
 const { antiXSS } = require("./src/xss/antiXSS");
 const { antiNoSQL } = require("./src/sqlInjection/antiNoSQL");
 const { antiSQL } = require("./src/sqlInjection/antiSQL");
-const { antiBruteForce } = require("./src/bruteForce/antiBruteForce");
+const { limitLoginAttempts } = require("./src/bruteForce/limitLoginAttempts");
+const { isStrongPassword } = require("./src/bruteForce/isStrongPassword");
 const { generateToken } = require("./src/jwt/generateToken");
 const { verifyTokenMiddleware } = require("./src/jwt/verifyTokenMiddleware");
 
@@ -17,7 +18,8 @@ module.exports = {
     antiXSS,
     antiNoSQL,
     antiSQL,
-    antiBruteForce,
+    limitLoginAttempts,
+    isStrongPassword,
     generateToken,
     verifyTokenMiddleware,
 };

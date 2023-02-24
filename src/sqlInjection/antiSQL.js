@@ -1,11 +1,8 @@
 const antiSQL = ({ input }) => {
-    // Ensure the input is a string
-    input = String(input);
+    let sanitizedString = input.replace(/['";:,.\/?\\-]/g, "");
+    sanitizedString = sanitizedString.replace(/[(){}\[\]]/g, "");
 
-    // Remove any characters that could be used in a SQL injection attack
-    input = input.replace(/['";]/g, "");
-
-    return input;
+    return sanitizedString;
 };
 
 module.exports = { antiSQL };

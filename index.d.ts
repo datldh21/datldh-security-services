@@ -32,7 +32,9 @@ export function addWatermarkToImage({
 
 export function hashStringData({ data }: { data: string });
 
-export function antiXSS({ input }: { input: string });
+export function limitLoginAttempts({ input }: { input: string });
+
+export function isStrongPassword({ password }: { password: string });
 
 export function antiNoSQL({ input }: { input: any });
 
