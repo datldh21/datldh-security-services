@@ -1,4 +1,4 @@
-const { jwtEncode } = require("../util");
+const { jwtEncode } = require("../../util");
 
 const generateToken = ({ id, ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET }) => {
     const accessTokenMaxAge = 1000 * 60 * 60 * 24 * 15;

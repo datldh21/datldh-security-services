@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const _ = require("lodash");
 const { handleRefreshToken } = require("./handleRefreshToken");
-const { getAccessToken, jwtDecodeToken } = require("../util");
+const { getAccessToken, jwtDecodeToken } = require("../../util");
 const { TokenExpiredError } = jwt;
 
 const verifyTokenMiddleware = async ({
